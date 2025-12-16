@@ -1,17 +1,13 @@
 import streamlit as st
 import pandas as pd
-import pickle
+import joblib
 
 st.set_page_config(page_title="Math Score Predictor", page_icon="📘", layout="centered")
 
 @st.cache_resource
 def load_artifacts():
-    with open("rf_math_model.pkl", "rb") as f:
-        model = pickle.load(f)
-
-    with open("label_encoders.pkl", "rb") as f:
-        encoders = pickle.load(f)
-
+    model = joblib.load("rf_math_model.pkl")
+    encoders = joblib.load("label_encoders.pkl")
     return model, encoders
 
 def encode_input(encoders, data_dict):
